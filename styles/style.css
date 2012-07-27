@@ -1,0 +1,568 @@
+/*
+Theme Name:  CSSettlers of Catan 
+Author:  Leonard Li
+URL:
+Version: 1.0
+
+[Table of Contents]
+	01 - GENERAL
+	02 - LAYOUT
+	03 - HEADER
+	04 - MAIN CONTENT
+	05 - GAME BOARD
+	06 - FORM
+	07 - BUTTONS
+	08 - RESPONSIVE DESIGN
+*/
+
+
+/****************************
+	01 - GENERAL
+*****************************/
+
+@font-face {
+  font-family: 'Orbitron';
+  src: 
+  url('../fonts/orbitron/orbitron-light-webfont.eot?') format('eot'), 
+  url('../fonts/orbitron/orbitron-light-webfont.woff') format('woff'), 
+  url('../fonts/orbitron/orbitron-light-webfont.ttf') format('truetype'),
+  url('../fonts/orbitron/orbitron-light-webfont.svg') format('svg');
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 125%;
+	color: #CCC;
+	background: #000;
+
+}
+
+h1 {
+	font-size: 30px;
+	margin: 25px 0 0 0px;
+	float:left;
+	font-weight: bold;
+	font-family: 'Orbitron', Arial, Helvetica;
+	color: #CCC;
+	text-shadow: #CCC 0.1em 0.1em 0.3em;
+
+}
+	h1 .blue {
+		color: #9DDCFF;
+	}
+
+h2 {
+	font-size: 20px;
+	padding: 20px 0 10px 20px;
+	font-weight: bold;
+	font-family: 'Orbitron', Arial, Helvetica;
+	color: #9DDCFF;
+}
+	
+
+h3 {
+	font-size: 16px;
+	color: #FFE64D;
+	padding: 5px 0 0 20px;
+	font-family: 'Orbitron', Arial, Helvetica;
+
+}
+	h3 span {
+		float: left;
+		width: 80px;
+	}
+
+h4 {
+	float:left;
+	font-size: 14px;
+	color: #FFE64D;
+	padding: 5px 0 0 20px;
+	font-family: 'Orbitron', Arial, Helvetica;
+}
+
+p {
+	padding: 5px 20px;
+}
+	p a {
+		color: #9DDCFF
+	}
+
+.clear {
+	clear: both;
+}
+
+.alignleft {
+	float: left;
+}
+
+.alignright {
+	float: right;
+}
+
+.square-thumbnail {
+	border: 1px solid #FFF;
+	width: 10px;
+	height: 10px;
+}
+
+.thumbnail {
+	border: 1px solid #FFF;
+	width: 25px;
+	height: 41px;
+}
+
+.last {
+	margin: 0 0 15px 0;		
+}
+
+.roundcorners {
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+}
+
+
+/****************************
+	02 - LAYOUT
+*****************************/
+
+#wrapper {
+}
+
+#container {
+}
+
+header {
+	overflow: hidden;
+	background: #116;
+}
+
+footer {
+	margin: 50px 0 10px 0;
+	color: #444;
+	padding: 0;
+
+}
+	footer p {
+		float: left;
+	}
+
+
+/****************************
+	03 - HEADER
+*****************************/
+	
+
+nav {
+	overflow: hidden;
+	font-family: 'Orbitron', Arial, Helvetica;
+
+}
+	nav ol {
+		float: right;
+	}
+		nav ol li {
+			float: left;
+		}
+
+		nav ol li a {
+			display: block;
+			color: #CCC;
+			font-size: 16px;
+			padding: 27px 15px;
+			text-decoration: none;
+
+		}
+			nav ol li a:hover {
+				color: #9DDCFF;
+				text-shadow: #9DDCFF 0.2em 0.2em 0.2em;
+			}
+
+
+
+
+/****************************
+	04 - MAIN CONTENT
+*****************************/
+#content {
+	float: right;
+
+}
+
+
+
+#social-media {
+	margin: 20px 0 0 0;
+	float: right;
+	overflow: hidden;
+}
+	#social-media ol li {
+		float: left;
+
+	    text-indent: 100%;
+	    white-space: nowrap;
+	    overflow: hidden;
+	}
+		#social-media ol li a {
+			display:block;
+			height: 55px;
+			width: 55px;
+			margin: 0 5px;
+			background: url('../images/socialNav.png') no-repeat;
+		}
+
+			#social-media ol li.linkedin a {
+				background-position: -7px -67px;
+			}
+				#social-media ol li.linkedin a:hover {
+					background-position: -7px -7px;
+				}
+
+			#social-media ol li.twitter a {
+				background-position: -67px -67px;
+			}
+				#social-media ol li.twitter a:hover {
+					background-position: -67px -7px;
+				}
+
+			#social-media ol li.facebook a {
+				background-position: -127px -67px;
+			}
+				#social-media ol li.facebook a:hover {
+					background-position: -127px -7px;
+				}
+
+
+
+.textarea {
+	display: block;
+	margin: 15px 0 0 0;
+	border: 3px solid #CCC;
+	background: #223;
+	overflow: hidden;
+	float: right;
+	width: 100%;
+
+}
+
+
+/****************************
+	05 - GAME BOARD
+*****************************/
+
+.box-Settlement1 {
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	background: url('../images/white.jpeg');
+    z-index: 1;
+    color: black;
+    padding: 3px 0 2px 10px;
+}
+
+
+.box-Settlement2 {
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	background: url('../images/white.jpeg');
+    z-index: 1;
+    color: black;
+    padding: 3px 3px 2px 7px;
+}
+
+#gameboard .houserow {
+    white-space: nowrap;
+    /*right/left margin set at (( width of child div x sin(30) ) / 2) makes a fairly tight fit; a 3px bottom seems to match*/
+    z-index: 1;
+
+}
+	#gameboard .houserow > div:first-of-type {
+	    width: 3px;
+	    height: 3px; /* ( width x cos(30) ) x 2 */
+	    position: absolute;
+	    background: url('../images/white.jpeg');
+	    display: inline-block;
+	    z-index: 1;
+	}
+
+	#gameboard .houserow > div:nth-child(odd) {
+	    -ms-transform:translate(50px, 0); /* IE 9 */
+	    -moz-transform:translate(50px, 0); /* Firefox */
+	    -webkit-transform:translate(50px, 0); /* Safari and Chrome */
+	    -o-transform:translate(50px, 0); /* Opera */
+	    transform:translate(50px, 0);
+	}
+
+#gameboard {
+ 	float: left;
+ 	display: block;
+ 	margin: 30px 0 0 0;
+	font-family: 'Orbitron', Arial, Helvetica;
+	color: #FFF;
+}
+
+#gameboard .hexrow {
+    white-space: nowrap;
+    /*right/left margin set at (( width of child div x sin(30) ) / 2) makes a fairly tight fit; a 3px bottom seems to match*/
+    margin: 0 12.5px 3px 0;
+
+}
+
+	#gameboard .hexrow > div {
+	    width: 50px;
+	    height: 86.6px; /* ( width x cos(30) ) x 2 */
+	    /* For margin:
+	    right/left = ( width x sin(30) ) makes no overlap 
+	    right/left = (( width x sin(30) ) / 2) leaves a narrow separation
+	    */
+	    margin: 0 12.5px; 
+	    position: relative;
+	    background-position: -25px 0; /* -left position -1 x width x sin(30) */
+	    background-repeat: no-repeat;
+	    background: url('../images/black.jpg');
+
+	    font-size: 28px;
+	    text-align: center;
+
+	    line-height: 95px; /*equals height*/
+	    display: inline-block;
+	}
+
+	#gameboard .hexrow > div:nth-child(odd) {
+	    top: 21.65px; /* ( width x cos(30) / 2 ) */
+	}
+
+	#gameboard .hexrow > div:nth-child(even) {
+	    top: -23.9px; /* -1 x( ( width x cos(30) / 2) + (hexrow bottom margin / 2)) */ 
+	}
+
+	#gameboard .hexrow > .redhex {
+		background: url('../images/red.png');
+	}
+	#gameboard .hexrow > .greenhex {
+		background: url('../images/green.png');
+	}
+	#gameboard .hexrow > .yellowhex {
+		background: url('../images/yellow.jpg');
+	}
+	#gameboard .hexrow > .silverhex {
+		background: url('../images/silver.jpg');
+	}
+	#gameboard .hexrow > .brownhex {
+		background: url('../images/brown.jpg');
+	}
+
+
+	/** Not Used **/
+	#gameboard .hexrow > .blackhex {
+		background: url('../images/black.jpg');
+	}
+	#gameboard .hexrow > .bluehex {
+		background: url('../images/blue.png');
+	}	
+	#gameboard .hexrow > .purplehex {
+		background: url('../images/purple.jpg');
+	}
+	#gameboard .hexrow > .whitehex {
+		background: url('../images/white.jpeg');
+	}
+	#gameboard .hexrow > .lightyellowhex {
+		background: url('../images/lightyellow.jpg');
+	}
+
+	#gameboard .hexrow > div > div:first-of-type {
+	    position: absolute;
+	    width: 100%;
+	    height: 100%; 
+	    top: 0;
+	    left: 0;
+	    z-index: -1;
+	    overflow: hidden;
+	    background-image: inherit;
+	    
+	    -ms-transform:rotate(60deg); /* IE 9 */
+	    -moz-transform:rotate(60deg); /* Firefox */
+	    -webkit-transform:rotate(60deg); /* Safari and Chrome */
+	    -o-transform:rotate(60deg); /* Opera */
+	    transform:rotate(60deg);
+	}
+
+	#gameboard .hexrow > div > div:first-of-type:before {
+	    content: '';
+	    position: absolute;
+	    width: 200px; /* width of main + margin sizing */
+	    height: 100%;
+	    background-image: inherit;
+	    background-position: top left;
+	    background-repeat: no-repeat;
+	    bottom: 0;
+	    left: 0;
+	    z-index: 1;
+	    
+	    -ms-transform:rotate(-60deg) translate(-150px, 0); /* IE 9 */
+	    -moz-transform:rotate(-60deg) translate(-150px, 0); /* Firefox */
+	    -webkit-transform:rotate(-60deg) translate(-150px, 0); /* Safari and Chrome */
+	    -o-transform:rotate(-60deg) translate(-150px, 0); /* Opera */
+	    transform:rotate(-60deg) translate(-150px, 0);
+	    
+	    -ms-transform-origin: 0 0; /* IE 9 */
+	    -webkit-transform-origin: 0 0; /* Safari and Chrome */
+	    -moz-transform-origin: 0 0; /* Firefox */
+	    -o-transform-origin: 0 0; /* Opera */
+	    transform-origin: 0 0;
+	}
+
+	#gameboard .hexrow > div > div:last-of-type {
+	    content: '';
+	    position: absolute;
+	    width: 100%;
+	    height: 100%;
+	    top: 0;
+	    left: 0;
+	    z-index: -2;
+	    overflow: hidden;
+	    background-image: inherit;
+	    
+	    -ms-transform:rotate(-60deg); /* IE 9 */
+	    -moz-transform:rotate(-60deg); /* Firefox */
+	    -webkit-transform:rotate(-60deg); /* Safari and Chrome */
+	    -o-transform:rotate(-60deg); /* Opera */
+	    transform:rotate(-60deg);
+	}
+
+	#gameboard .hexrow > div > div:last-of-type:before {
+	    content: '';
+	    position: absolute;
+	    width: 200px; /* starting width + margin sizing */
+	    height: 100%;
+	    background-image: inherit;
+	    background-position: top left;
+	    background-repeat: no-repeat;
+	    bottom: 0;
+	    left: 0;
+	    z-index: 1;
+	    
+	    /*translate properties are initial width (100px) and half height (173.2 / 2 = 86.6) */
+	    -ms-transform:rotate(60deg) translate(100px, 86.6px); /* IE 9 */
+	    -moz-transform:rotate(60deg) translate(100px, 86.6px); /* Firefox */
+	    -webkit-transform:rotate(60deg) translate(100px, 86.6px); /* Safari and Chrome */
+	    -o-transform:rotate(60deg) translate(100px, 86.6px); /* Opera */
+	    transform:rotate(60deg) translate(100px, 86.6px);
+	    
+	    -ms-transform-origin: 100% 0; /* IE 9 */
+	    -webkit-transform-origin: 100% 0; /* Safari and Chrome */
+	    -moz-transform-origin: 100% 0; /* Firefox */
+	    -o-transform-origin: 100% 0; /* Opera */
+	    transform-origin: 100% 0;
+	}
+
+	#gameboard .hexrow > div > span {
+	    display: inline-block;
+	    margin: 0 -15px;
+	    line-height: 1.1;
+	    vertical-align: middle;
+	    white-space: normal; 
+	}
+
+/****************************
+	06 - FORM
+*****************************/
+
+form {
+	margin:0 auto;
+}
+
+label {
+	display:block;
+	margin: 0 0 0px 20px;
+	letter-spacing:1px;
+}
+
+input, textarea {
+	height: 10px;
+	width: 200px;
+	margin: 20px 0 20px 20px;
+	background:#efefef;
+	border-radius:2px;
+	-moz-border-radius:2px;
+	-webkit-border-radius:2px;
+	border:1px solid #dedede;
+	padding:5px;
+	margin-top:2px;
+	font-size:0.9em;
+	color:#3a3a3a;
+}
+
+	input:focus, textarea:focus {
+		border:1px solid #97d6eb;
+	}
+
+textarea {
+	width: 400px;
+	height: 100px;
+	font-family:Arial, Helvetica, sans-serif;
+	background: #efefef;
+}
+
+#submit {
+	background: #9DDCFF;
+	width:100px;
+	height:30px;
+	border:none;
+	margin: 0 0 30px 20px;
+	cursor:pointer;
+}
+
+	#submit:hover {
+		opacity:0.9;
+	}
+
+/****************************
+	07 - BUTTONS
+*****************************/
+
+.button {
+   border-top: 1px solid #ffe74d;
+   background: #ffe74d;
+   background: -webkit-gradient(linear, left top, left bottom, from(#ffe74d), to(#ffe74d));
+   background: -webkit-linear-gradient(top, #ffe74d, #ffe74d);
+   background: -moz-linear-gradient(top, #ffe74d, #ffe74d);
+   background: -ms-linear-gradient(top, #ffe74d, #ffe74d);
+   background: -o-linear-gradient(top, #ffe74d, #ffe74d);
+   padding: 4px 10px;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: #000000;
+   font-size: 10px;
+   text-decoration: none;
+   vertical-align: top;
+   font-family: 'Orbitron', Arial, Helvetica;
+	text-indent: 5px;
+}
+
+.button:hover {
+   border-top-color: #9dddff;
+   background: #9dddff;
+   color: #000ecc;
+}
+
+.button:active {
+   border-top-color: #df760c;
+   background: #df760c;
+}
+
+/****************************
+	08 - RESPONSIVE DESIGN
+*****************************/
+
+@media only screen and (max-width:420px) {
+	body {
+	}
+}
