@@ -337,10 +337,10 @@ function ViewOdds (aOdds) {
 
 	var odds_html=
 		'<h4><img src="images/red.png" class="square-thumbnail" alt="Red Background Image"> Clay</h4><p>'+CalculateOdds("Clay", aOdds)+'%</p>'+
-		'<h4><img src="images/blue.png" class="square-thumbnail" alt="Blue Background Image"> Wood</h4><p>'+CalculateOdds("Wood", aOdds)+'%</p>'+
-		'<h4><img src="images/green.png" class="square-thumbnail" alt="Green Background Image"> Wool</h4><p>'+CalculateOdds("Wool", aOdds)+'%</p>'+
 		'<h4><img src="images/yellow.jpg" class="square-thumbnail" alt="Yellow Background Image"> Wheat</h4><p>'+CalculateOdds("Wheat", aOdds)+'%</p>'+
-		'<h4><img src="images/silver.jpg" class="square-thumbnail" alt="Silver Background Image"> Rock</h4><p>'+CalculateOdds("Rock", aOdds)+'%</p>';
+		'<h4><img src="images/green.png" class="square-thumbnail" alt="Green Background Image"> Wool</h4><p>'+CalculateOdds("Wool", aOdds)+'%</p>'+
+		'<h4><img src="images/silver.jpg" class="square-thumbnail" alt="Silver Background Image"> Rock</h4><p>'+CalculateOdds("Rock", aOdds)+'%</p>'+
+		'<h4><img src="images/blue.png" class="square-thumbnail" alt="Blue Background Image"> Wood</h4><p>'+CalculateOdds("Wood", aOdds)+'%</p>';
 	$('.p-lastodds').text(CalculateTotalOdds(aOdds)+'%');
 
 	$('#oddsresults').html(odds_html);
