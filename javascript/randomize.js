@@ -10,7 +10,6 @@ var aNearestSettlement1 = [];
 var aNearestSettlement2 = [];
 var aSettlements = [];
 var aHexBoard = [];
-var aOdds =[];
 
 var state = "off";
 var s1_flag = false;
@@ -28,7 +27,7 @@ var aNumberOdds = [
 	{ dice: 9, odds: 11.11},
 	{ dice: 10, odds: 8.33},
 	{ dice: 11, odds: 5.56},
-	{ dice: 12, odds: 2.78}
+	{ dice: 12, odds: 2.78},
 	];
 
 
@@ -69,49 +68,73 @@ $(function() {
 	});
 
 	$('#gameboard').click(function(e){
-		// Calculate Coordinates
-    	$('.box-'+state).css("left", (e.pageX-12.5) + "px");
-    	$('.box-'+state).css("top", (e.pageY-10) + "px");
-    	var xcoord = (e.pageX-12.5);
-    	var ycoord = (e.pageY-10);
-
-    	// Find Nearest Hexes
-    	NearestHexes(state,xcoord,ycoord);
-
-    	//Change Button to Display Nearby Hexes
-    	$('.'+state).text('Hexes '+aNearestHexes[0].hexNumber+','+aNearestHexes[1].hexNumber+','+aNearestHexes[2].hexNumber);
-
-    	// Update Settlement Arrays
-    	if (aNearestHexes[0].hexState == 'Settlement1'){
-    		aNearestSettlement1 = [];
-    		aNearestSettlement1.push(aNearestHexes[0]);
-    		aNearestSettlement1.push(aNearestHexes[1]);
-    		aNearestSettlement1.push(aNearestHexes[2]);
-    	} else {
-    		aNearestSettlement2 = [];
-    		aNearestSettlement2.push(aNearestHexes[0]);
-    		aNearestSettlement2.push(aNearestHexes[1]);
-    		aNearestSettlement2.push(aNearestHexes[2]);
-    	}
-		aSettlements = [].concat(aNearestSettlement1, aNearestSettlement2);	
-
-    	// Calculate and View Odds if Both Settlements Placed
-    	if (s1_flag && s2_flag && odds_once) { 
-    		aOdds =[];
-  	
-			for (i in aSettlements) {
-				aOdds.push(CreateOdds(aSettlements[i]));
-			}
-			//console.log(aOdds);
-			ViewOdds();
-			odds_once = false;		
+		if (!s1_flag && !s2_flag) {
+			state = "Settlement1";
+			s1_flag = true;
+			odds_once = true;
+		} else if (s1_flag && !s2_flag) {
+			state = "Settlement2";
+			s2_flag = true;
+			odds_once = true;
+		} else if (!s1_flag && s2_flag) {
+			state = "Settlement1";
+			s2_flag = true;
+			odds_once = true;
 		};
-		$('#message').hide();
-		var msg_html='<h4 class="last">Click Button Again to Edit</h4>'
-		$('#message').html(msg_html);
-		$('#message').fadeIn();
 
-    	state = "off";
+		if (state != "off") {
+			// Calculate Coordinates
+	    	$('.box-'+state).css("left", (e.pageX-12.5) + "px");
+	    	$('.box-'+state).css("top", (e.pageY-10) + "px");
+	    	var xcoord = (e.pageX-12.5);
+	    	var ycoord = (e.pageY-10);
+
+	    	// Find Nearest Hexes
+	    	NearestHexes(state,xcoord,ycoord);
+
+	    	//Change Button to Display Nearby Hexes
+	    	$('.'+state).text('Hexes '+aNearestHexes[0].hexNumber+','+aNearestHexes[1].hexNumber+','+aNearestHexes[2].hexNumber);
+
+	    	// Update Settlement Arrays
+	    	if (aNearestHexes[0].hexState == 'Settlement1'){
+	    		aNearestSettlement1 = [];
+	    		aNearestSettlement1.push(aNearestHexes[0]);
+	    		aNearestSettlement1.push(aNearestHexes[1]);
+	    		aNearestSettlement1.push(aNearestHexes[2]);
+	    	} else {
+	    		aNearestSettlement2 = [];
+	    		aNearestSettlement2.push(aNearestHexes[0]);
+	    		aNearestSettlement2.push(aNearestHexes[1]);
+	    		aNearestSettlement2.push(aNearestHexes[2]);
+	    	};
+			aSettlements = [].concat(aNearestSettlement1, aNearestSettlement2);	
+
+	    	// Calculate and View Odds if Both Settlements Placed
+	    	if (s1_flag && s2_flag && odds_once) { 
+	    		var aOdds =[];
+	  	
+				for (i in aSettlements) {
+					aOdds.push(CreateOdds(aSettlements[i]));
+				}
+				//console.log(aOdds);
+				ViewOdds(aOdds);
+				odds_once = false;		
+			};
+			if (s1_flag && s2_flag) { 
+				$('#message').hide();
+				var msg_html='<h4 class="last">Click Buttons to Edit Settlements</h4>'
+				$('#message').html(msg_html);
+				$('#message').fadeIn();
+			} else if (s1_flag || s2_flag ) { 
+				$('#message').hide();
+				var msg_html='<h4 class="last">Now Place the Other Settlement</h4>'
+				$('#message').html(msg_html);
+				$('#message').fadeIn();
+			};
+
+
+	    	state = "off";
+    	};
 	});
 
 });
@@ -219,12 +242,13 @@ function NearestHexes(fstate, xcoord, ycoord) {
 	for (j in aHex) {
 		if(aHex[j].hexDistance == aHexDistance[0]) {
 			aNearestHexes.push(aHex[j]);
-		}
-		if(aHex[j].hexDistance == aHexDistance[1]) {
+			aHexDistance[0]=-1;
+		} else if(aHex[j].hexDistance == aHexDistance[1]) {
 			aNearestHexes.push(aHex[j]);
-		}
-		if(aHex[j].hexDistance == aHexDistance[2]) {
+			aHexDistance[1]=-1;
+		} else if(aHex[j].hexDistance == aHexDistance[2]) {
 			aNearestHexes.push(aHex[j]);
+			aHexDistance[2]=-1;
 		}
 	}
 	//console.log(aNearestHexes);
@@ -243,8 +267,17 @@ function CreateOdds (oSettlement) {
 				hex: sHexColor,
 				resource: sResource
 			}			
+		} else if ( oSettlement.hexNumber == "X" ) {
+			var oOdds = {
+				dice: 0, 
+				odds: 0,
+				hex: sHexColor,
+				resource: "No Resource"
+			}			
 		}
 	}
+	//console.log(oSettlement);
+	//console.log(oOdds);
 	return oOdds;
 
 }
@@ -268,15 +301,19 @@ function HexToResource(sHexColor) {
 			sResource = "Rock";
 			break;
 		case "brownhex":
-			sResource = "None";
+			sResource = "No Resource";
 			break;
 	}
+	//console.log(sHexColor);
+	//console.log(sResource);
+
 	return sResource;
 }
 
-function CalculateOdds (sResource) {
+function CalculateOdds (sResource, aOdds) {
 	var nOdds = 0;
 	var nTotalOdds = 0;
+
 	for (i in aOdds) {
 		if (aOdds[i].resource == sResource) {
 			nOdds = nOdds + aOdds[i].odds;
@@ -286,7 +323,7 @@ function CalculateOdds (sResource) {
 	return nOdds.toFixed(2);
 }
 
-function CalculateTotalOdds() {
+function CalculateTotalOdds(aOdds) {
 	var nTotalOdds = 0;
 	for (i in aOdds) {
 		nTotalOdds = nTotalOdds + aOdds[i].odds;
@@ -294,17 +331,17 @@ function CalculateTotalOdds() {
 	return nTotalOdds.toFixed(2);
 }
 
-function ViewOdds () {
+function ViewOdds (aOdds) {
 	$('#legend').fadeOut();
 	$('#oddspane').fadeOut();
 
 	var odds_html=
-		'<h4><img src="images/red.png" class="square-thumbnail" alt="Red Background Image"> Clay</h4><p>'+CalculateOdds("Clay")+'%</p>'+
-		'<h4><img src="images/blue.png" class="square-thumbnail" alt="Blue Background Image"> Wood</h4><p>'+CalculateOdds("Wood")+'%</p>'+
-		'<h4><img src="images/green.png" class="square-thumbnail" alt="Green Background Image"> Wool</h4><p>'+CalculateOdds("Wool")+'%</p>'+
-		'<h4><img src="images/yellow.jpg" class="square-thumbnail" alt="Yellow Background Image"> Wheat</h4><p>'+CalculateOdds("Wheat")+'%</p>'+
-		'<h4><img src="images/silver.jpg" class="square-thumbnail" alt="Silver Background Image"> Rock</h4><p>'+CalculateOdds("Rock")+'%</p>';
-	$('.p-lastodds').text(CalculateTotalOdds()+'%');
+		'<h4><img src="images/red.png" class="square-thumbnail" alt="Red Background Image"> Clay</h4><p>'+CalculateOdds("Clay", aOdds)+'%</p>'+
+		'<h4><img src="images/blue.png" class="square-thumbnail" alt="Blue Background Image"> Wood</h4><p>'+CalculateOdds("Wood", aOdds)+'%</p>'+
+		'<h4><img src="images/green.png" class="square-thumbnail" alt="Green Background Image"> Wool</h4><p>'+CalculateOdds("Wool", aOdds)+'%</p>'+
+		'<h4><img src="images/yellow.jpg" class="square-thumbnail" alt="Yellow Background Image"> Wheat</h4><p>'+CalculateOdds("Wheat", aOdds)+'%</p>'+
+		'<h4><img src="images/silver.jpg" class="square-thumbnail" alt="Silver Background Image"> Rock</h4><p>'+CalculateOdds("Rock", aOdds)+'%</p>';
+	$('.p-lastodds').text(CalculateTotalOdds(aOdds)+'%');
 
 	$('#oddsresults').html(odds_html);
 	$('#oddspane').fadeIn();
