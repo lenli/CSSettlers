@@ -144,17 +144,17 @@ function InitializeBoard() {
 		$('#oddspane').hide();
 		$('#message').hide();
 
-		$('.box-Settlement1').css("left", "470px");
+		$('.box-Settlement1').css("left", "70px");
     	$('.box-Settlement1').css("top", "100px");
     	$('.box-Settlement1').css("width", "15px");
     	$('.box-Settlement1').css("height", "20px");
-		$('.Settlement1').text("Place Settlement #1");
+		$('.Settlement1').text("Settlement #1");
 
-	    $('.box-Settlement2').css("left", "500px");
+	    $('.box-Settlement2').css("left", "100px");
     	$('.box-Settlement2').css("top", "100px");
     	$('.box-Settlement2').css("width", "15px");
     	$('.box-Settlement2').css("height", "20px");
-		$('.Settlement2').text("Place Settlement #2");
+		$('.Settlement2').text("Settlement #2");
 }
 
 
