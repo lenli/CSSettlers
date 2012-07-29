@@ -246,54 +246,63 @@ nav {
 
 }
 
+#oddsresults h4 {
+	width: 125px;
+	float: left;		
+}
 
-/****************************
-	05 - GAME BOARD
-*****************************/
+#oddsresults p {
+	clear: none;
+	float: left;
+	width: 60px;
+	padding: 5px 0 0 20px;
+}
+
+
+#oddsresultsfooter h4 {
+	width: 125px;
+	float: left;		
+}
+
+#oddsresultsfooter p {
+	clear: none;
+	float: left;
+	width: 60px;
+	padding: 5px 0 0 20px;
+}
+
+#oddsresultsfooter .h4-lastodds {
+	width: 200px;
+	clear: left;
+	margin: 15px 0 15px 80px;
+}
+
+#oddsresultsfooter .p-lastodds {
+	margin: 15px 0 15px 0;
+}
 
 .box-Settlement1 {
 	position: absolute;
-	width: 15px;
-	height: 15px;
 	background: url('../images/white.jpeg');
     z-index: 1;
     color: black;
-    padding: 3px 0 2px 10px;
+    padding: 5px 1px 0 9px;
+    border: 2px solid black;
 }
 
 
 .box-Settlement2 {
 	position: absolute;
-	width: 15px;
-	height: 15px;
 	background: url('../images/white.jpeg');
     z-index: 1;
     color: black;
-    padding: 3px 3px 2px 7px;
+    padding: 5px 3px 0 7px;
+    border: 2px solid black;
 }
+/****************************
+	05 - GAME BOARD
+*****************************/
 
-#gameboard .houserow {
-    white-space: nowrap;
-    /*right/left margin set at (( width of child div x sin(30) ) / 2) makes a fairly tight fit; a 3px bottom seems to match*/
-    z-index: 1;
-
-}
-	#gameboard .houserow > div:first-of-type {
-	    width: 3px;
-	    height: 3px; /* ( width x cos(30) ) x 2 */
-	    position: absolute;
-	    background: url('../images/white.jpeg');
-	    display: inline-block;
-	    z-index: 1;
-	}
-
-	#gameboard .houserow > div:nth-child(odd) {
-	    -ms-transform:translate(50px, 0); /* IE 9 */
-	    -moz-transform:translate(50px, 0); /* Firefox */
-	    -webkit-transform:translate(50px, 0); /* Safari and Chrome */
-	    -o-transform:translate(50px, 0); /* Opera */
-	    transform:translate(50px, 0);
-	}
 
 #gameboard {
  	float: left;

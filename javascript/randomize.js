@@ -8,23 +8,29 @@ var aHexNumbers = [5,8,4,11,12,9,10,8,3,6,2,10,3,6,5,4,9,11];
 var aNearestHexes = [];
 var aNearestSettlement1 = [];
 var aNearestSettlement2 = [];
+var aSettlements = [];
 var aHexBoard = [];
+var aOdds =[];
 
 var state = "off";
 var s1_flag = false;
 var s2_flag = false;
+var odds_once = false;
 
 var aNumberOdds = [
 	{ dice: 2, odds: 2.78},
 	{ dice: 3, odds: 5.56},
 	{ dice: 4, odds: 8.33},
 	{ dice: 5, odds: 11.11},
+	{ dice: 6, odds: 13.89},
+	{ dice: 7, odds: 16.67},
 	{ dice: 8, odds: 13.89},
 	{ dice: 9, odds: 11.11},
 	{ dice: 10, odds: 8.33},
 	{ dice: 11, odds: 5.56},
 	{ dice: 12, odds: 2.78}
 	];
+
 
 $(function() {
 	InitializeBoard();
@@ -47,20 +53,35 @@ $(function() {
 	$('.Settlement1').click(function(){
 		state = "Settlement1";
 		s1_flag = true;
+		odds_once = true;
+		var msg_html='<h4 class="last">Now Click On the Gameboard</h4>'
+		$('#message').html(msg_html);
+		$('#message').fadeIn();
+
 	});
 	$('.Settlement2').click(function(){
 		state = "Settlement2";
 		s2_flag = true;
+		odds_once = true;
+		var msg_html='<h4 class="last">Now Click On the Gameboard</h4>'
+		$('#message').html(msg_html);
+		$('#message').fadeIn();
 	});
+
 	$('#gameboard').click(function(e){
+		// Calculate Coordinates
     	$('.box-'+state).css("left", (e.pageX-12.5) + "px");
     	$('.box-'+state).css("top", (e.pageY-10) + "px");
-    	
     	var xcoord = (e.pageX-12.5);
     	var ycoord = (e.pageY-10);
+
+    	// Find Nearest Hexes
     	NearestHexes(state,xcoord,ycoord);
+
+    	//Change Button to Display Nearby Hexes
     	$('.'+state).text('Hexes '+aNearestHexes[0].hexNumber+','+aNearestHexes[1].hexNumber+','+aNearestHexes[2].hexNumber);
 
+    	// Update Settlement Arrays
     	if (aNearestHexes[0].hexState == 'Settlement1'){
     		aNearestSettlement1 = [];
     		aNearestSettlement1.push(aNearestHexes[0]);
@@ -72,28 +93,44 @@ $(function() {
     		aNearestSettlement2.push(aNearestHexes[1]);
     		aNearestSettlement2.push(aNearestHexes[2]);
     	}
-    	if (s1_flag && s2_flag) {   	
-			$('.viewodds').show();
+		aSettlements = [].concat(aNearestSettlement1, aNearestSettlement2);	
+
+    	// Calculate and View Odds if Both Settlements Placed
+    	if (s1_flag && s2_flag && odds_once) { 
+    		aOdds =[];
+  	
+			for (i in aSettlements) {
+				aOdds.push(CreateOdds(aSettlements[i]));
+			}
+			//console.log(aOdds);
+			ViewOdds();
+			odds_once = false;		
 		};
+		$('#message').hide();
+		var msg_html='<h4 class="last">Click Button Again to Edit</h4>'
+		$('#message').html(msg_html);
+		$('#message').fadeIn();
 
     	state = "off";
 	});
-	$('.viewodds').click(function(){
-		$('.viewodds').text("To Be Coded");
-	})
+
 });
 
 function InitializeBoard() {
-		$('.viewodds').hide();
+		$('#oddspane').hide();
+		$('#message').hide();
 
-		$('.box-Settlement1').css("left", "450px");
+		$('.box-Settlement1').css("left", "470px");
     	$('.box-Settlement1').css("top", "100px");
-		$('.Settlement1').text("Place Settlement #1")
+    	$('.box-Settlement1').css("width", "15px");
+    	$('.box-Settlement1').css("height", "20px");
+		$('.Settlement1').text("Place Settlement #1");
 
 	    $('.box-Settlement2').css("left", "500px");
     	$('.box-Settlement2').css("top", "100px");
-		$('.Settlement2').text("Place Settlement #2")
-
+    	$('.box-Settlement2').css("width", "15px");
+    	$('.box-Settlement2').css("height", "20px");
+		$('.Settlement2').text("Place Settlement #2");
 }
 
 
@@ -148,6 +185,16 @@ function NearestHexes(fstate, xcoord, ycoord) {
 		aHexDistance.push(nHexDistance);
 		aHexDistance.sort(function (a,b){ return a-b});
 
+		// Calculate Odds
+
+		var nOddsPercentage = 0;
+		for (k in aNumberOdds) {
+			if ( aHexBoard[i].hexNumber == aNumberOdds[k].dice ) {
+				nOddsPercentage = aNumberOdds[k].odds;
+				break;
+			}
+		}
+
 		// Create Array of Hexes With Distances
 		var oHex = {
 			hexState: fstate,
@@ -156,6 +203,7 @@ function NearestHexes(fstate, xcoord, ycoord) {
 			hexNumber: aHexBoard[i].hexNumber,
 			hexLeft: aHexBoard[i].hexLeft,
 			hexTop: aHexBoard[i].hexTop,
+			hexOdds: nOddsPercentage,
 			hexLeftDiff: Math.abs(aHexBoard[i].hexLeft-xcoord), 
 			hexTopDiff: Math.abs(aHexBoard[i].hexTop-ycoord),
 			hexDistance: Math.abs(aHexBoard[i].hexLeft-xcoord)+Math.abs(aHexBoard[i].hexTop-ycoord)
@@ -165,6 +213,7 @@ function NearestHexes(fstate, xcoord, ycoord) {
 	//console.log(aHexDistance);
 	//console.log(aHex);
 
+	// fix bug with duplicate distances
 	// Find Hexes With Three Lowest Distances (Nearest Hexes)
 	aNearestHexes = [];
 	for (j in aHex) {
@@ -180,4 +229,83 @@ function NearestHexes(fstate, xcoord, ycoord) {
 	}
 	//console.log(aNearestHexes);
 
+}
+
+function CreateOdds (oSettlement) {
+	for (k in aNumberOdds) {
+		if ( oSettlement.hexNumber == aNumberOdds[k].dice ) {
+			var sHexColor = oSettlement.hexColor;
+			var sResource = HexToResource(sHexColor);
+
+			var oOdds = {
+				dice: aNumberOdds[k].dice, 
+				odds: aNumberOdds[k].odds,
+				hex: sHexColor,
+				resource: sResource
+			}			
+		}
+	}
+	return oOdds;
+
+}
+
+function HexToResource(sHexColor) {
+	var sResource;
+	switch (sHexColor) {
+		case "yellowhex":
+			sResource = "Wheat";
+			break;
+		case "bluehex":
+			sResource = "Wood";
+			break;
+		case "redhex":
+			sResource = "Clay";
+			break;
+		case "greenhex":
+			sResource = "Wool";
+			break;
+		case "silverhex":
+			sResource = "Rock";
+			break;
+		case "brownhex":
+			sResource = "None";
+			break;
+	}
+	return sResource;
+}
+
+function CalculateOdds (sResource) {
+	var nOdds = 0;
+	var nTotalOdds = 0;
+	for (i in aOdds) {
+		if (aOdds[i].resource == sResource) {
+			nOdds = nOdds + aOdds[i].odds;
+		}
+		nTotalOdds = nTotalOdds + aOdds[i].odds;
+	}
+	return nOdds.toFixed(2);
+}
+
+function CalculateTotalOdds() {
+	var nTotalOdds = 0;
+	for (i in aOdds) {
+		nTotalOdds = nTotalOdds + aOdds[i].odds;
+	}
+	return nTotalOdds.toFixed(2);
+}
+
+function ViewOdds () {
+	$('#legend').fadeOut();
+	$('#oddspane').fadeOut();
+
+	var odds_html=
+		'<h4><img src="images/red.png" class="square-thumbnail" alt="Red Background Image"> Clay</h4><p>'+CalculateOdds("Clay")+'%</p>'+
+		'<h4><img src="images/blue.png" class="square-thumbnail" alt="Blue Background Image"> Wood</h4><p>'+CalculateOdds("Wood")+'%</p>'+
+		'<h4><img src="images/green.png" class="square-thumbnail" alt="Green Background Image"> Wool</h4><p>'+CalculateOdds("Wool")+'%</p>'+
+		'<h4><img src="images/yellow.jpg" class="square-thumbnail" alt="Yellow Background Image"> Wheat</h4><p>'+CalculateOdds("Wheat")+'%</p>'+
+		'<h4><img src="images/silver.jpg" class="square-thumbnail" alt="Silver Background Image"> Rock</h4><p>'+CalculateOdds("Rock")+'%</p>';
+	$('.p-lastodds').text(CalculateTotalOdds()+'%');
+
+	$('#oddsresults').html(odds_html);
+	$('#oddspane').fadeIn();
 }
