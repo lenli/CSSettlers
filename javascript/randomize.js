@@ -68,16 +68,12 @@ $(function() {
 	});
 
 	$('#gameboard').click(function(e){
-		if (!s1_flag && !s2_flag) {
+		if (!s1_flag && !s2_flag && state=="off") {
 			state = "Settlement1";
 			s1_flag = true;
 			odds_once = true;
-		} else if (s1_flag && !s2_flag) {
+		} else if (s1_flag && !s2_flag && state=="off") {
 			state = "Settlement2";
-			s2_flag = true;
-			odds_once = true;
-		} else if (!s1_flag && s2_flag) {
-			state = "Settlement1";
 			s2_flag = true;
 			odds_once = true;
 		};
@@ -140,6 +136,11 @@ $(function() {
 });
 
 function InitializeBoard() {
+		state = "off";
+		s1_flag = false;
+		s2_flag = false;
+		odds_once = false;
+
 		$('#oddspane').hide();
 		$('#message').hide();
 
@@ -236,7 +237,6 @@ function NearestHexes(fstate, xcoord, ycoord) {
 	//console.log(aHexDistance);
 	//console.log(aHex);
 
-	// fix bug with duplicate distances
 	// Find Hexes With Three Lowest Distances (Nearest Hexes)
 	aNearestHexes = [];
 	for (j in aHex) {
