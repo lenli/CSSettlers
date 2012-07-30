@@ -143,6 +143,7 @@ function InitializeBoard() {
 
 		$('#oddspane').hide();
 		$('#message').hide();
+		$('#legend').fadeIn();
 
 		$('.box-Settlement1').css("left", "70px");
     	$('.box-Settlement1').css("top", "100px");
@@ -258,20 +259,19 @@ function NearestHexes(fstate, xcoord, ycoord) {
 function CreateOdds (oSettlement) {
 	for (k in aNumberOdds) {
 		if ( oSettlement.hexNumber == aNumberOdds[k].dice ) {
-			var sHexColor = oSettlement.hexColor;
-			var sResource = HexToResource(sHexColor);
-
 			var oOdds = {
+				name: oSettlement.hexName,
 				dice: aNumberOdds[k].dice, 
 				odds: aNumberOdds[k].odds,
-				hex: sHexColor,
-				resource: sResource
+				hex: oSettlement.hexColor,
+				resource: HexToResource(oSettlement.hexColor)
 			}			
 		} else if ( oSettlement.hexNumber == "X" ) {
 			var oOdds = {
+				name: oSettlement.hexName,
 				dice: 0, 
 				odds: 0,
-				hex: sHexColor,
+				hex: oSettlement.hexColor,
 				resource: "No Resource"
 			}			
 		}
@@ -312,21 +312,33 @@ function HexToResource(sHexColor) {
 
 function CalculateOdds (sResource, aOdds) {
 	var nOdds = 0;
-	var nTotalOdds = 0;
+	var aOddsOrdered = aOdds.sort(function (a,b) { return a.dice - b.dice })
+	var nLastDice = 0;
 
-	for (i in aOdds) {
-		if (aOdds[i].resource == sResource) {
-			nOdds = nOdds + aOdds[i].odds;
+	for (i in aOddsOrdered) {
+		if (aOddsOrdered[i].dice != nLastDice) {
+			if (aOddsOrdered[i].resource == sResource) {
+				nOdds = nOdds + aOddsOrdered[i].odds;
+				nLastDice = aOddsOrdered[i].dice;
+			}
+		} else if (aOddsOrdered[i].dice == nLastDice) {
+			//console.log(sLastHex);
 		}
-		nTotalOdds = nTotalOdds + aOdds[i].odds;
 	}
 	return nOdds.toFixed(2);
 }
 
 function CalculateTotalOdds(aOdds) {
 	var nTotalOdds = 0;
-	for (i in aOdds) {
-		nTotalOdds = nTotalOdds + aOdds[i].odds;
+	var aOddsOrdered = aOdds.sort(function (a,b) { return a.dice - b.dice })
+	var nLastDice = 0;
+	for (i in aOddsOrdered) {
+		if (aOddsOrdered[i].dice != nLastDice) {
+			nTotalOdds = nTotalOdds + aOddsOrdered[i].odds;
+			nLastDice = aOddsOrdered[i].dice;
+		} else if (aOddsOrdered[i].dice == nLastDice) {
+			//console.log(nLastDice);
+		}
 	}
 	return nTotalOdds.toFixed(2);
 }
