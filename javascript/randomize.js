@@ -48,6 +48,8 @@ $(function() {
 		RandomizeBoard();
 	});
 
+
+
 	// Place Settlements
 	$('.Settlement1').click(function(){
 		state = "Settlement1";
@@ -56,6 +58,11 @@ $(function() {
 		var msg_html='<h4 class="last">Now Click On the Gameboard</h4>'
 		$('#message').html(msg_html);
 		$('#message').fadeIn();
+		$('#gameboard').animate({
+		    opacity: 1
+		}, 500, function() {
+		    // Animation complete.
+		});
 
 	});
 	$('.Settlement2').click(function(){
@@ -65,6 +72,11 @@ $(function() {
 		var msg_html='<h4 class="last">Now Click On the Gameboard</h4>'
 		$('#message').html(msg_html);
 		$('#message').fadeIn();
+		$('#gameboard').animate({
+		    opacity: 1
+		}, 500, function() {
+		    // Animation complete.
+		});
 	});
 
 	$('#gameboard').click(function(e){
@@ -106,16 +118,6 @@ $(function() {
 			aSettlements = [].concat(aNearestSettlement1, aNearestSettlement2);	
 
 	    	// Calculate and View Odds if Both Settlements Placed
-	    	if (s1_flag && s2_flag && odds_once) { 
-	    		var aOdds =[];
-	  	
-				for (i in aSettlements) {
-					aOdds.push(CreateOdds(aSettlements[i]));
-				}
-				//console.log(aOdds);
-				ViewOdds(aOdds);
-				odds_once = false;		
-			};
 			if (s1_flag && s2_flag) { 
 				$('#message').hide();
 				var msg_html='<h4 class="last">Click Buttons to Edit Settlements</h4>'
@@ -127,6 +129,18 @@ $(function() {
 				$('#message').html(msg_html);
 				$('#message').fadeIn();
 			};
+
+	    	if (s1_flag && s2_flag && odds_once) { 
+	    		var aOdds =[];
+	  	
+				for (i in aSettlements) {
+					aOdds.push(CreateOdds(aSettlements[i]));
+				}
+				//console.log(aOdds);
+				ViewOdds(aOdds);
+				odds_once = false;		
+			};
+
 
 
 	    	state = "off";
@@ -156,6 +170,11 @@ function InitializeBoard() {
     	$('.box-Settlement2').css("width", "15px");
     	$('.box-Settlement2').css("height", "20px");
 		$('.Settlement2').text("Settlement #2");
+		$('#gameboard').animate({
+		    opacity: 1
+		}, 300, function() {
+		    // Animation complete.
+		});
 }
 
 
@@ -163,7 +182,11 @@ function RandomizeBoard() {
 	var j=0;
 	aHexBoard = [];
 	aHexColors = aHexColorsOrdered.sort(function() {return 0.5 - Math.random()});
-
+	$('#gameboard').animate({
+	    opacity: 0.25
+	}, 500, function() {
+	    // Animation complete.
+	});
 	for (i in aHexOrder) {
 		// Set Colors
 		var sHexColor = aHexColors[i];
@@ -185,6 +208,12 @@ function RandomizeBoard() {
 		j++;
 	}
 	//console.log(aHexBoard);
+
+	$('#gameboard').animate({
+	    opacity: 1
+	}, 500, function() {
+	    // Animation complete.
+	});	
 }
 
 function CreateHex(name, color, hexNumber, left, top) {
@@ -357,4 +386,46 @@ function ViewOdds (aOdds) {
 
 	$('#oddsresults').html(odds_html);
 	$('#oddspane').fadeIn();
+
+	$('#gameboard').animate({
+	    opacity: 0.25
+	}, 1000, function() {
+	    // Animation complete.
+	});
+
+
+/**
+	$('#message').animate({
+	    opacity: 0.1
+	}, 500, function() {
+	    // Animation complete.
+	});
+	$('#message').animate({
+	    opacity: 1
+	}, 500, function() {
+	    // Animation complete.
+	});
+**/
+	$('.Settlement1').animate({
+	    opacity: 0.1
+	}, 1000, function() {
+	    // Animation complete.
+	});
+	$('.Settlement2').animate({
+	    opacity: 0.1
+	}, 1000, function() {
+	    // Animation complete.
+	});
+	$('.Settlement1').animate({
+	    opacity: 1
+	}, 1000, function() {
+	    // Animation complete.
+	});
+	$('.Settlement2').animate({
+	    opacity: 1
+	}, 1000, function() {
+	    // Animation complete.
+	});
+
+
 }
