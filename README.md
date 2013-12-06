@@ -3,7 +3,7 @@ CSSettlers
 
 CSSettlers of Catan was my final project for my Front-End Web Development course at General Assembly.
  
-The project is a calculator for the Settlers of Catan game, which computes your probability for receiving "game resources" based on strategic "settlement" placements.
+The project is a Javascript calculator for the Settlers of Catan game, which computes your probability for receiving "game resources" based on strategic "settlement" placements.
  
 The project features:
 
